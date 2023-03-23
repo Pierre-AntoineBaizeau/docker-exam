@@ -24,16 +24,31 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/todos", async (req, res) => {
-  //TO_MODIFY
-  res.send([]); // to remove after question 1)
+  try {
+    const results = await db.select("*").from("todos");
+    res.json(results);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.post("/todos", async (req, res) => {
-  //TO_MODIFY
+  const todo = { title: req.body.title, completed: req.body.completed };
+  try {
+    const [id] = await db("todos").insert(todo);
+    res.json({ id, ...todo });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-app.delete("/todos/:todoId", async (req, res) => {
-  //TO_MODIFY
+app.delete("/todos/:id", async (req, res) => {
+  try {
+    const deleteTodo = await db("todos").where("id", req.params.id).del();
+    res.json({ message: "delete the todo", deleteTodo });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 app.listen(port, () => {

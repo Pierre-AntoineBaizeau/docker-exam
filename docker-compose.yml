@@ -1,6 +1,30 @@
 version: "3.7"
 services:
   backend:
+    container_name: backend
+    hostname: backend
     build: ./backend
     ports:
       - "4001:4001"
+    depends_on:
+      - db
+    networks:
+      - network
+  db:
+    build: ./mysql
+    container_name: db
+    hostname: db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: database
+      MYSQL_ROOT_HOST: "%"
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+    networks:
+      - network
+volumes:
+  mysql-data:
+networks:
+  network:
