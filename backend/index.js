@@ -15,13 +15,17 @@ const db = require("knex")({
 const cors = require("cors");
 const app = express();
 
-const port = //TO_MODIFY
+const port = 4001;
 app.use(express.json());
 app.use(cors());
 
+app.get("/", async (req, res) => {
+  res.send("ca marche");
+});
+
 app.get("/todos", async (req, res) => {
   //TO_MODIFY
-  res.send([]) // to remove after question 1)
+  res.send([]); // to remove after question 1)
 });
 
 app.post("/todos", async (req, res) => {
