@@ -13,7 +13,6 @@ const App = () => {
   const fetchTodos = () => {
     getTodos()
       .then((data) => {
-        console.log(data);
         setTodos(data);
       })
       .then(console.log)
