@@ -33,7 +33,7 @@ app.get("/todos", async (req, res) => {
 });
 
 app.post("/todos", async (req, res) => {
-  const todo = { title: req.body.title, completed: req.body.completed };
+  const todo = { name: req.body.name, description: req.body.description };
   try {
     const [id] = await db("todos").insert(todo);
     res.json({ id, ...todo });
